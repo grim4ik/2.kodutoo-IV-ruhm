@@ -20,14 +20,17 @@
 	
 	
 	if ( isset($_POST["age"]) && 
-		 isset($_POST["color"]) && 
+		 isset($_POST["color"]) &&
+		 isset($_POST["text"]) && 		 
 		 !empty($_POST["age"]) &&
+		 !empty($_POST["text"]) &&
 		 !empty($_POST["color"]) 
 	) {
 		
 		$color = cleanInput($_POST["color"]);
+	    $text = cleanInput($_POST["text"]);
 		
-		saveEvent(cleanInput($_POST["age"]), $color);
+		saveEvent(cleanInput($_POST["age"]), $color, $text);
 	}
 	
 	$people = getAllPeople();
@@ -57,6 +60,10 @@
 	<br><br>
 	<label>Värv</label><br>
 	<input name="color" type="color">
+	
+	<br><br>
+	<label>Text</label><br>
+	<input name="text" type="text">
 	
 	<br><br>
 	

@@ -88,14 +88,14 @@
 	
 	
 	
-	function saveEvent($age, $color) {
+	function saveEvent($age, $color, $text) {
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli->prepare("INSERT INTO Iventlog (age, color) VALUE (?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO Iventlog (age, color, text) VALUE (?, ?, ?)");
 		echo $mysqli->error;
 		
-		$stmt->bind_param("is", $age, $color);
+		$stmt->bind_param("is", $age, $color,  $text);
 		
 		if ( $stmt->execute() ) {
 			echo "õnnestus";
@@ -111,10 +111,10 @@
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
 		$stmt = $mysqli->prepare("
-		SELECT id, age, color
+		SELECT id, age, color, text
 		FROM Iventlog
 		");
-		$stmt->bind_result($id, $age, $color);
+		$stmt->bind_result($id, $age, $color, $text);
 		$stmt->execute();
 		
 		$results = array();
@@ -127,6 +127,7 @@
 			$human->id = $id;
 			$human->age = $age;
 			$human->lightColor = $color;
+			$human->text = $text;
 			
 			
 			//echo $color."<br>";
