@@ -24,14 +24,14 @@
 	if (isset ($_POST["signupEmail"])) {
 		
 		//on olemas
-		// kas epost on tühi
+		// kas epost on tuhi
 		if (empty ($_POST["signupEmail"])) {
 			
-			// on tühi
-			$signupEmailError = "* Väli on kohustuslik!";
+			// on tuhi
+			$signupEmailError = "* Vali on kohustuslik!";
 			
 		} else {
-			// email on olemas ja õige
+			// email on olemas ja oige
 			$signupEmail = $_POST["signupEmail"];
 			
 		}
@@ -44,15 +44,15 @@
 		
 		if (empty ($_POST["signupPassword"])) {
 			
-			$signupPasswordError = "* Väli on kohustuslik!";
+			$signupPasswordError = "* Vali on kohustuslik!";
 			
 		} else {
 			
-			// parool ei olnud tühi
+			// parool ei olnud tuhi
 			
 			if ( strlen($_POST["signupPassword"]) < 8 ) {
 				
-				$signupPasswordError = "* Parool peab olema vähemalt 8 tähemärkki pikk!";
+				$signupPasswordError = "* Parool peab olema vahemalt 8 tahemarkki pikk!";
 				
 			}
 			
@@ -64,17 +64,17 @@
 			
 			//error
 		}else {
-			// annad väärtuse
+			// annad vaartuse
 		}
 		
 	}
 	
-	//vaikimisi väärtus
+	//vaikimisi vaartus
 	$gender = "";
 	
 	if (isset ($_POST["gender"])) {
 		if (empty ($_POST["gender"])) {
-			$genderError = "* Väli on kohustuslik!";
+			$genderError = "* Vali on kohustuslik!";
 		} else {
 			$gender = $_POST["gender"];
 		}
@@ -90,7 +90,7 @@
 		 isset($_POST["signupPassword"]) 
 	  ) {
 		
-		//vigu ei olnud, kõik on olemas	
+		//vigu ei olnud, koik on olemas	
 		echo "Salvestan...<br>";
 		echo "email ".$signupEmail."<br>";
 		echo "parool ".$_POST["signupPassword"]."<br>";
@@ -119,7 +119,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Sisselogimise leht</title>
+			<title>Kasutajaloomine leht</title>
 	</head>
 	<body>
 		<center>
@@ -131,22 +131,21 @@
 			background-attachment: fixed;
 			}
 		</style>
-
-		<h1>Logi sisse</h1>
-		<p style="color:red;"><?=$notice;?></p>
+		<h1>Loo kasutaja</h1>
+		
 		<form method="POST" >
 			
 			<label>E-post</label><br>
-			<input name="loginEmail" type="email">
+			<input name="signupEmail" type="email" value="<?=$signupEmail;?>"> <?php echo $signupEmailError; ?>
 			
 			<br><br>
 			<label>Parool</label><br>
-			<input name="loginPassword" type="password">
+			<input name="signupPassword" type="password"> <?php echo $signupPasswordError; ?>
 			
 			<br><br>
 			
-			<input type="submit" value="Logi sisse">
-			<p><a href="register.php">Loo kasutaja</a></p>
+			<input type="submit" value="Loo kasutaja">
+			<p><a href="login.php"><-Tagasi</a></p>
 		
 		</form>
 

@@ -13,7 +13,7 @@
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUE (?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO users (email, password) VALUE (?, ?)");
 		echo $mysqli->error;
 		
 		$stmt->bind_param("ss", $email, $password);
@@ -34,7 +34,7 @@
 		
 		$stmt = $mysqli->prepare("
 			SELECT id, email, password, created
-			FROM user_sample
+			FROM users
 			WHERE email = ?
 		");
 		
@@ -88,14 +88,14 @@
 	
 	
 	
-	function saveEvent($age, $color, $text) {
+	function saveEvent($nimi, $text) {
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli->prepare("INSERT INTO Iventlog (age, color, text) VALUE (?, ?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO omaidee (nimi, text) VALUE (?, ?)");
 		echo $mysqli->error;
 		
-		$stmt->bind_param("is", $age, $color,  $text);
+		$stmt->bind_param("is", $nimi, $text);
 		
 		if ( $stmt->execute() ) {
 			echo "õnnestus";
@@ -111,10 +111,10 @@
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
 		$stmt = $mysqli->prepare("
-		SELECT id, age, color, text
-		FROM Iventlog
+		SELECT id, nimi, text
+		FROM omaidee
 		");
-		$stmt->bind_result($id, $age, $color, $text);
+		$stmt->bind_result($id, $nimi, $text);
 		$stmt->execute();
 		
 		$results = array();
@@ -125,12 +125,11 @@
 			
 			$human = new StdClass();
 			$human->id = $id;
-			$human->age = $age;
-			$human->lightColor = $color;
+			$human->nimi = $nimi;
 			$human->text = $text;
 			
 			
-			//echo $color."<br>";
+			//echo $text."<br>";
 			array_push($results, $human);
 			
 		}

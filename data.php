@@ -19,32 +19,32 @@
 	}
 	
 	
-	if ( isset($_POST["age"]) && 
-		 isset($_POST["color"]) &&
-		 isset($_POST["text"]) && 		 
-		 !empty($_POST["age"]) &&
-		 !empty($_POST["text"]) &&
-		 !empty($_POST["color"]) 
+	if ( isset($_POST["nimi"]) && 
+		 isset($_POST["text"]) && 
+		 !empty($_POST["nimi"]) &&
+		 !empty($_POST["text"]) 
 	) {
 		
-		$color = cleanInput($_POST["color"]);
-	    $text = cleanInput($_POST["text"]);
+		$text = cleanInput($_POST["text"]);
 		
-		saveEvent(cleanInput($_POST["age"]), $color, $text);
+		saveEvent(cleanInput($_POST["nimi"]), $text);
 	}
 	
 	$people = getAllPeople();
 	
-	echo "<pre>";
-	var_dump($people[1]); //[1] - võib ära kustutada
-	echo "</pre>";
+
 	
 ?>
+		<center>
+			<style>	
+		body {
+			background-image:	url("http://www.astro.spbu.ru/staff/afk/Teaching/Seminars/XimFak/bg/Fon5.gif");
+			background-repeat: repeat;
+			background-position: center top;
+			background-attachment: fixed;
+			}
+		</style>
 <h1>Data</h1>
-
-<?php echo$_SESSION["userEmail"];?>
-
-<?=$_SESSION["userEmail"];?>
 
 <p>
 	Tere tulemast <?=$_SESSION["userEmail"];?>!
@@ -54,12 +54,8 @@
 <h2>Salvesta sündmus</h2>
 <form method="POST" >
 	
-	<label>Vanus</label><br>
-	<input name="age" type="number">
-	
-	<br><br>
-	<label>Värv</label><br>
-	<input name="color" type="color">
+	<label>Nimi</label><br>
+	<input name="nimi" type="text">
 	
 	<br><br>
 	<label>Text</label><br>
@@ -79,8 +75,8 @@
 		
 		$html .= "<tr>";
 			$html .= "<th>ID</th>";
-			$html .= "<th>Vanus</th>";
-			$html .= "<th>Värv</th>";
+			$html .= "<th>Nimi</th>";
+			$html .= "<th>Text</th>";
 		$html .= "</tr>";
 		
 		// iga liikme kohta massiivis
@@ -88,8 +84,8 @@
 		
 		$html .= "<tr>";
 			$html .= "<td>".$p->id."</td>";
-			$html .= "<td>".$p->age."</td>";
-			$html .= "<td>".$p->lightColor."</td>";
+			$html .= "<td>".$p->nimi."</td>";
+			$html .= "<td>".$p->text."</td>";
 		$html .= "</tr>";
 		
 		}
@@ -100,29 +96,3 @@
 
 ?>
 
-<h2>Midagi huvitavat</h2>
-
-<?php 
-
-	foreach($people as $p)  {
-		
-		$style = "
-			background-color:".$p->lightColor.";
-			width: 40px;
-			height: 40px;
-			border-radius: 20px;
-			text-align: center;
-			line-height: 40px;
-			float: left;
-			margin: 20px;
-		
-		";
-			
-		echo "<p style =' ".$style." ' >".$p->age."</p>";	
-		
-		
-	}
-
-
-
-?>
