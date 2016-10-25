@@ -19,15 +19,25 @@
 	}
 	
 	
-	if ( isset($_POST["nimi"]) && 
-		 isset($_POST["text"]) && 
+	if ( isset($_POST["vanus"]) && 
+		 isset($_POST["text"]) &&
+		 isset($_POST["nimi"]) &&
+		 isset($_POST["pnimi"]) &&
+		 !empty($_POST["vanus"]) &&
+		 !empty($_POST["text"]) &&
 		 !empty($_POST["nimi"]) &&
-		 !empty($_POST["text"]) 
+		 !empty($_POST["pnimi"]) 
 	) {
 		
 		$text = cleanInput($_POST["text"]);
 		
-		saveEvent(cleanInput($_POST["nimi"]), $text);
+		$nimi = cleanInput($_POST["nimi"]);
+		
+		$pnimi = cleanInput($_POST["pnimi"]);
+		
+		
+		saveEvent(cleanInput($_POST["vanus"]), $text, $nimi, $pnimi);
+		
 	}
 	
 	$people = getAllPeople();
@@ -58,6 +68,16 @@
 	<input name="nimi" type="text">
 	
 	<br><br>
+	
+	<label>Perekonnanimi</label><br>
+	<input name="pnimi" type="text">
+	
+	<br><br>
+	<label>Vanus</label><br>
+	<input name="vanus" type="text">
+	
+
+	<br><br>
 	<label>Text</label><br>
 	<input name="text" type="text">
 	
@@ -74,8 +94,10 @@
 	$html = "<table>";
 		
 		$html .= "<tr>";
-			$html .= "<th>ID</th>";
+			$html .= "<td>ID</td>";
 			$html .= "<th>Nimi</th>";
+			$html .= "<th>Perekonnanimi</th>";
+			$html .= "<th>Vanus</th>";
 			$html .= "<th>Text</th>";
 		$html .= "</tr>";
 		
@@ -85,6 +107,8 @@
 		$html .= "<tr>";
 			$html .= "<td>".$p->id."</td>";
 			$html .= "<td>".$p->nimi."</td>";
+			$html .= "<td>".$p->pnimi."</td>";
+			$html .= "<td>".$p->vanus."</td>";
 			$html .= "<td>".$p->text."</td>";
 		$html .= "</tr>";
 		

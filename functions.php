@@ -9,14 +9,14 @@
 	$database = "if16_kirikotk_4";
 	// functions.php
 	
-	function signup($email, $password) {
+	function signup($email, $password, $name, $nimi) {
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli->prepare("INSERT INTO users (email, password) VALUE (?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO users (email, password, name, nimi) VALUE (?, ?, ?, ?)");
 		echo $mysqli->error;
 		
-		$stmt->bind_param("ss", $email, $password);
+		$stmt->bind_param("ssss", $email, $password, $name, $nimi);
 		
 		if ( $stmt->execute() ) {
 			echo "õnnestus";
@@ -25,6 +25,7 @@
 		}
 		
 	}
+	
 	
 	function login($email, $password) {
 		
@@ -88,14 +89,14 @@
 	
 	
 	
-	function saveEvent($nimi, $text) {
+	function saveEvent($vanus, $text, $nimi, $pnimi) {
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
-		$stmt = $mysqli->prepare("INSERT INTO omaidee (nimi, text) VALUE (?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO omaidee (vanus, text, nimi, pnimi) VALUE (?, ?, ?, ?)");
 		echo $mysqli->error;
 		
-		$stmt->bind_param("is", $nimi, $text);
+		$stmt->bind_param("isss", $vanus, $text, $nimi, $pnimi);
 		
 		if ( $stmt->execute() ) {
 			echo "õnnestus";
@@ -111,10 +112,10 @@
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 		
 		$stmt = $mysqli->prepare("
-		SELECT id, nimi, text
+		SELECT id, vanus, text, nimi, pnimi
 		FROM omaidee
 		");
-		$stmt->bind_result($id, $nimi, $text);
+		$stmt->bind_result($id, $vanus, $text, $nimi, $pnimi);
 		$stmt->execute();
 		
 		$results = array();
@@ -125,8 +126,10 @@
 			
 			$human = new StdClass();
 			$human->id = $id;
-			$human->nimi = $nimi;
+			$human->vanus = $vanus;
 			$human->text = $text;
+			$human->nimi = $nimi;
+			$human->pnimi = $pnimi;
 			
 			
 			//echo $text."<br>";

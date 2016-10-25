@@ -38,6 +38,53 @@
 		
 	} 
 	
+		//MUUTUJAD
+	$signupNameError = "*";
+	$signupName = "";
+	
+	//kas keegi vajutas nuppu ja see on olemas
+	
+	if (isset ($_POST["signupName"])) {
+		
+		//on olemas
+		// kas epost on tuhi
+		if (empty ($_POST["signupName"])) {
+			
+			// on tuhi
+			$signupNameError = "* Vali on kohustuslik!";
+			
+		} else {
+			// email on olemas ja oige
+			$signupName = $_POST["signupName"];
+			
+		}
+		
+	} 
+	
+			//MUUTUJAD
+	$signupNimiError = "*";
+	$signupNimi = "";
+	
+	//kas keegi vajutas nuppu ja see on olemas
+	
+	if (isset ($_POST["signupNimi"])) {
+		
+		//on olemas
+		// kas epost on tuhi
+		if (empty ($_POST["signupNimi"])) {
+			
+			// on tuhi
+			$signupNimiError = "* Vali on kohustuslik!";
+			
+		} else {
+			// email on olemas ja oige
+			$signupNimi = $_POST["signupNimi"];
+			
+		}
+		
+	} 
+	
+	
 	$signupPasswordError = "*";
 	
 	if (isset ($_POST["signupPassword"])) {
@@ -86,20 +133,26 @@
 	
 	if ( $signupEmailError == "*" AND
 		 $signupPasswordError == "*" &&
+		 $signupNameError == "*" &&
+		 $signupNimiError == "*" &&
 		 isset($_POST["signupEmail"]) && 
+		 isset($_POST["signupName"]) &&
+		 isset($_POST["signupNimi"]) &&
 		 isset($_POST["signupPassword"]) 
 	  ) {
 		
 		//vigu ei olnud, koik on olemas	
 		echo "Salvestan...<br>";
 		echo "email ".$signupEmail."<br>";
+		echo "login ".$signupName."<br>";
+		echo "nimi ".$signupNimi."<br>";
 		echo "parool ".$_POST["signupPassword"]."<br>";
 		
 		$password = hash("sha512", $_POST["signupPassword"]);
 		
 		echo $password."<br>";
 		
-		signup($signupEmail, $password);
+		signup($signupEmail, $password, $signupName, $signupNimi);
 		
 		
 	}
@@ -107,7 +160,7 @@
 	$notice = "";
 	//kas kasutaja tahab sisse logida
 	if ( isset($_POST["loginEmail"]) && 
-		 isset($_POST["loginPassword"]) && 
+		 isset($_POST["loginPassword"]) &&
 		 !empty($_POST["loginEmail"]) &&
 		 !empty($_POST["loginPassword"]) 
 	) {
@@ -137,6 +190,16 @@
 			
 			<label>E-post</label><br>
 			<input name="signupEmail" type="email" value="<?=$signupEmail;?>"> <?php echo $signupEmailError; ?>
+			
+			<br><br>
+			
+			<label>Login</label><br>
+			<input name="signupName" type="login" value="<?=$signupName;?>"> <?php echo $signupNameError; ?>
+			
+			<br><br>
+			
+			<label>Nimi</label><br>
+			<input name="signupNimi" type="name" value="<?=$signupNimi;?>"> <?php echo $signupNimiError; ?>
 			
 			<br><br>
 			<label>Parool</label><br>
